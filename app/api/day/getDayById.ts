@@ -16,6 +16,9 @@ export default async function getDayById(id: string) {
         userId: session.user.id,
         id,
       },
+      include: {
+        tasks: true,
+      },
     });
 
     if (day) {

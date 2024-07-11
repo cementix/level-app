@@ -87,7 +87,7 @@ model Task {
 
   title       String
   description String?
-  isCompleted Boolean
+  isCompleted Boolean @default(false)
 
   stats Stat[]
 
