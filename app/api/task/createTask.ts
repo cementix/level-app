@@ -14,7 +14,6 @@ export default async function createTask(title: string, description: string, day
             return null;
         }
 
-        // Создание задачи
         const task = await prisma.task.create({
             data: {
                 title,
@@ -28,7 +27,7 @@ export default async function createTask(title: string, description: string, day
             }
         });
 
-        const prompt = `Task: ${title}\nDescription: ${description}\nCalculate the stat changes in the format {"STRENGTH": X, "ENDURANCE": Y, "INTELLIGENCE": Z, "AGILITY": W, "DISCIPLINE": V} where X, Y, Z, W, V are the numbers. Do not use +, just type like {"STRENGTH: 2"} and others. You cant give negative stats, aim for giving overall around 1-5 points for a task. If it's an extreme task like really long(4+) work session you can give it more points. Give it appropriate points, for example if it's coding or another work you give it intelligence, if it's sport you mostly give it physical points. For example, if it's some light task like buy products you can give it 0 because it's just a reminder and if it's aimed at improving a person like doing some work or workout give pluses`;
+        const prompt = `Task: ${title}\nDescription: ${description}\nCalculate the stat changes in the format {"STRENGTH": X, "ENDURANCE": Y, "INTELLIGENCE": Z, "AGILITY": W, "DISCIPLINE": V} where X, Y, Z, W, V are the numbers. Do not use +, just type like {"STRENGTH: 2"} and others. You cant give negative stats, aim for giving overall around 1-5 points for a task. If it's an extreme task like really long(4+) work session you can give it more points. Give it appropriate points, for example if it's coding or another work you give it intelligence, if it's sport you mostly give it physical points. For example, if it's some light task like buy products you can give it 0 because it's just a reminder and if it's aimed at improving a person like doing some work or workout give pluses. Do not send the ones you gave 0.`;
 
         const response = await openai.chat.completions.create({
             model: 'gpt-3.5-turbo',
@@ -44,11 +43,9 @@ export default async function createTask(title: string, description: string, day
             throw new Error("Received null or undefined content from OpenAI");
         }
 
-        // Очистка и парсинг JSON ответа
         const cleanedContent = messageContent.replace(/([a-zA-Z]+):\s*\+?(\d+)/g, '"$1": $2');
         const stats = JSON.parse(cleanedContent.trim());
 
-        // Сохранение характеристик задачи
         const statPromises = Object.entries(stats).map(([type, count]) => {
             let enumType: EnumStatType;
             switch (type.toUpperCase()) {
