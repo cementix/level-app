@@ -23,10 +23,12 @@ export default async function createTask(title: string, description: string, day
                 dayId,
                 isCompleted: false
             },
+            include: {
+                stats: true
+            }
         });
 
-        // Формирование запроса к ChatGPT
-        const prompt = `Task: ${title}\nDescription: ${description}\nCalculate the stat changes in the format {"STRENGTH": X, "ENDURANCE": Y, "INTELLIGENCE": Z, "AGILITY": W, "DISCIPLINE": V} where X, Y, Z, W, V are the numbers. Do not use +, just type like {"STRENGTH: 2"} and others`;
+        const prompt = `Task: ${title}\nDescription: ${description}\nCalculate the stat changes in the format {"STRENGTH": X, "ENDURANCE": Y, "INTELLIGENCE": Z, "AGILITY": W, "DISCIPLINE": V} where X, Y, Z, W, V are the numbers. Do not use +, just type like {"STRENGTH: 2"} and others. You cant give negative stats, aim for giving overall around 1-5 points for a task. If it's an extreme task like really long(4+) work session you can give it more points. Give it appropriate points, for example if it's coding or another work you give it intelligence, if it's sport you mostly give it physical points. For example, if it's some light task like buy products you can give it 0 because it's just a reminder and if it's aimed at improving a person like doing some work or workout give pluses`;
 
         const response = await openai.chat.completions.create({
             model: 'gpt-3.5-turbo',
@@ -51,7 +53,7 @@ export default async function createTask(title: string, description: string, day
             let enumType: EnumStatType;
             switch (type.toUpperCase()) {
                 case "STRENGTH":
-                    enumType = EnumStatType.STRENGHT;
+                    enumType = EnumStatType.STRENGTH;
                     break;
                 case "ENDURANCE":
                     enumType = EnumStatType.ENDURANCE;

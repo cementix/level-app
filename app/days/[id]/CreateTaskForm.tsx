@@ -29,7 +29,7 @@ const formSchema = z.object({
 
 const CreateDayForm = () => {
   const pathname = usePathname();
-  const dayId = pathname.split("/").pop(); // Получаем последнее значение в пути URL
+  const dayId = pathname.split("/").pop();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { toast } = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -40,7 +40,6 @@ const CreateDayForm = () => {
     },
   });
 
-  console.log(dayId);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);

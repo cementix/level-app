@@ -17,7 +17,11 @@ export default async function getDayById(id: string) {
         id,
       },
       include: {
-        tasks: true,
+        tasks: {
+          include: {
+            stats: true,
+          },
+        },
       },
     });
 

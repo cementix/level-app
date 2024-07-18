@@ -7,7 +7,7 @@ const page = async ({params}: {params: {id: string}}) => {
     const {id} = params
     const day = await getDayById(id)
   return (
-    <main className="ml-[15%]">
+    <main className="ml-[15%] flex items-center justify-center h-screen">
       {day ? <TaskManager tasks={day.tasks} /> : <ClipLoader /> }
     </main>
   )
