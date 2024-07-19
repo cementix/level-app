@@ -21,7 +21,7 @@ const ChatWindow = ({ isOpen }: { isOpen: boolean }) => {
         Chat with the system
       </div>
 
-      <MessagesContainer />
+<MessagesContainer />
 
       <MessageInput />
 
