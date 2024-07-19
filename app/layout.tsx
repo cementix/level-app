@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "./Navbar";
 import { Toaster } from "@/components/ui/toaster";
 import SessionWrapper from "./SessionWrapper";
+import Chat from "@/components/shared/chat/Chat";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({
         <SessionWrapper>
           <Navbar />
           {children}
+          <Chat />
           <Toaster />
         </SessionWrapper>
       </body>
