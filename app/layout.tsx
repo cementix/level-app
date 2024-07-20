@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "./Navbar";
+import Navbar from "../components/shared/navbar/Navbar";
 import { Toaster } from "@/components/ui/toaster";
 import SessionWrapper from "./SessionWrapper";
 import Chat from "@/components/shared/chat/Chat";

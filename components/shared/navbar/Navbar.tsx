@@ -1,6 +1,6 @@
 import AuthManagement from "./AuthManagement";
 import CreateDayButton from "./CreateDayButton";
-import DaysList from "./DaysList";
+import DaysList from "../../../app/DaysList";
 
 const Navbar = () => {
   return (

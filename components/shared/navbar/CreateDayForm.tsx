@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import createDay from "./api/day/createDay";
+import createDay from "../../../app/api/day/createDay";
 import { ClipLoader } from "react-spinners";
 import { useToast } from "@/components/ui/use-toast";
 
