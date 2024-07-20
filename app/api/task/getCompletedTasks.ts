@@ -1,15 +1,11 @@
 "use server"
 
-import { authOptions } from "@/lib/auth"
+import { checkServerSession } from "@/lib/checkServerSession"
 import prisma from "@/lib/db"
-import { getServerSession } from "next-auth"
 
 export default async function getCompletedTasks(userId: string) {
     try {
-        const session = await getServerSession(authOptions)
-        if (!session) {
-            throw new Error('Unauthorized')
-        }
+        const session = await checkServerSession()
 
         const tasks = await prisma.task.findMany({
             where: {

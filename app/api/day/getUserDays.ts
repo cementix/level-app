@@ -1,15 +1,11 @@
 "use server";
 
-import { authOptions } from "@/lib/auth";
+import { checkServerSession } from "@/lib/checkServerSession";
 import prisma from "@/lib/db";
-import { getServerSession } from "next-auth";
 
 export default async function getUserDays() {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session) {
-      return null;
-    }
+    const session = await checkServerSession()
 
     const days = await prisma.day.findMany({
       where: {

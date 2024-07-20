@@ -1,18 +1,14 @@
 "use server"
 
-import { authOptions } from "@/lib/auth";
-import { getServerSession } from "next-auth";
-import { PrismaClient, EnumStatType } from '@prisma/client';
+import { checkServerSession } from "@/lib/checkServerSession";
 import openai from '@/lib/openai';
+import { EnumStatType, PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
 export default async function createTask(title: string, description: string, dayId: string) {
     try {
-        const session = await getServerSession(authOptions);
-        if (!session) {
-            return null;
-        }
+        const session = await checkServerSession()
 
         const task = await prisma.task.create({
             data: {

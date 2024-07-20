@@ -1,9 +1,8 @@
 "use server"
 
-import { authOptions } from "@/lib/auth";
+import { checkServerSession } from "@/lib/checkServerSession";
 import prisma from "@/lib/db";
 import { Task } from "@prisma/client";
-import { getServerSession } from "next-auth";
 
 function calculateLevel(exp: number) {
   let level = 1;
@@ -18,10 +17,7 @@ function calculateLevel(exp: number) {
 
 export default async function checkTask(task: Task) {
   try {
-    const session = await getServerSession(authOptions)
-    if (!session) {
-      throw new Error('Unauthorized');
-    }
+    const session = await checkServerSession()
 
     const foundTask = await prisma.task.findUnique({
       where: { id: task.id }

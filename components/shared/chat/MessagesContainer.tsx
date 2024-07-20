@@ -1,9 +1,5 @@
 import fetchMessages from "@/app/api/message/fetchMessages";
-import { authOptions } from "@/lib/auth";
-import prisma from "@/lib/db";
-import { Conversation, Message } from "@prisma/client";
-import { getServerSession } from "next-auth";
-import { getSession } from "next-auth/react";
+import { Message } from "@prisma/client";
 import { useEffect, useState } from "react";
 
 const MessagesContainer = () => {
